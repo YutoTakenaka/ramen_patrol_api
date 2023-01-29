@@ -1,16 +1,20 @@
-from typing import Any, List, Union
+from typing import List
 from pydantic import BaseModel
 from datetime import datetime
 
-
-class Post(BaseModel):
-    post_id: int
+class CreatePost(BaseModel):
     image: str
     caption: str
     location: str
+    user_id: int
+
+class UpdatePost(CreatePost):
+    post_id: int
+
+class Post(CreatePost):
+    post_id: int
     created_at: datetime = None
     updated_at: datetime = None
-    user_id: int
 
     class Config:
         orm_mode = True
