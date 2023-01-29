@@ -4,6 +4,7 @@ from datetime import datetime, timedelta, timezone
 from sqlalchemy.orm import relationship
 
 JST = timezone(timedelta(hours=+9), 'JST')
+
 class User(Base):
     __tablename__ = 'users'
     user_id = Column(Integer, primary_key = True, index = True)
