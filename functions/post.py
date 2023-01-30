@@ -19,9 +19,8 @@ def create_post(request: schemas.CreatePost, db: Session):
 
 
 # 投稿編集
-def edit_post(request: schemas.UpdatePost, db: Session):
-    post_id = request.post_id
-    post = db.query(models.Post).filter(models.Post.post_id == post_id).first()
+def edit_post(request: schemas.Post, post_id: int, db: Session):
+    post = db.query(models.Post).filter(models.Post.post_id == post_id).one_or_none()
     if not post:
         raise HTTPException(status_code = 404, detail = "post_id not found.")
     
@@ -36,5 +35,18 @@ def edit_post(request: schemas.UpdatePost, db: Session):
     post.updated_at = datetime.now(models.JST)
 
     db.commit()
-    db.refresh(post)
     return post
+
+
+# 投稿削除
+def delete_post(post_id: int, db = Session):
+    post = db.query(models.Post).filter(models.Post.post_id == post_id).one_or_none()
+    if not post:
+        raise HTTPException(status_code = 404, detail = "post_id not found.")
+    
+    # @todo ログインユーザーのuser_idと投稿したユーザーのuser_idが一致しているかチェック
+    # if post.user_id != user_id:
+    #     raise HTTPException(status_code = 403, detail = "This user does not have permission.")
+    db.delete(post)
+    db.commit()
+    return 

@@ -18,6 +18,11 @@ def create_post(request: schemas.CreatePost,db: Session = Depends(get_db)):
     return post.create_post(request, db)
 
 # 投稿編集
-@router.post("/edit_post", response_model = schemas.Post)
-def edit_post(request: schemas.UpdatePost,db: Session = Depends(get_db)):
-    return post.edit_post(request, db)
+@router.post("/edit_post/{post_id}", response_model = schemas.Post)
+def edit_post(request: schemas.Post, post_id: int,db: Session = Depends(get_db)):
+    return post.edit_post(request, post_id, db)
+
+# 投稿削除
+@router.post("/delete_post/{post_id}")
+def delete_post(post_id,db: Session = Depends(get_db)):
+    return post.delete_post(post_id, db)
