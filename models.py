@@ -20,6 +20,7 @@ class User(Base):
 class Post(Base):
     __tablename__ = 'posts'
     post_id = Column(Integer, primary_key = True, index = True)
+    # @todo imageの型をファイル型に修正
     image = Column(String, index = True)
     caption = Column(String, index = True)
     location = Column(String, index = True)

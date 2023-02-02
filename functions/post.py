@@ -7,6 +7,9 @@ from datetime import datetime
 def get_posts_all(db: Session):
     return db.query(models.Post).order_by(models.Post.created_at.desc()).all()
 
+# 投稿取得
+def get_post(post_id: int, db: Session):
+    return db.query(models.Post).filter(models.Post.post_id == post_id).one_or_none()
 
 # 新規投稿
 def create_post(request: schemas.CreatePost, db: Session):
@@ -19,7 +22,7 @@ def create_post(request: schemas.CreatePost, db: Session):
 
 
 # 投稿編集
-def edit_post(request: schemas.Post, post_id: int, db: Session):
+def edit_post(request: schemas.UpdatePost, post_id: int, db: Session):
     post = db.query(models.Post).filter(models.Post.post_id == post_id).one_or_none()
     if not post:
         raise HTTPException(status_code = 404, detail = "post_id not found.")

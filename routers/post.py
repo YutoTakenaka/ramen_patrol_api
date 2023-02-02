@@ -12,6 +12,11 @@ router = APIRouter(tags=["posts"])
 def get_posts_all(db: Session = Depends(get_db)):
     return post.get_posts_all(db)
 
+# 投稿取得
+@router.get("/get_post/{post_id}", response_model = schemas.Post)
+def get_post(post_id: int, db: Session = Depends(get_db)):
+    return post.get_post(post_id, db)
+
 # 新規投稿
 @router.post("/create_post", response_model = schemas.Post)
 def create_post(request: schemas.CreatePost,db: Session = Depends(get_db)):
@@ -19,7 +24,7 @@ def create_post(request: schemas.CreatePost,db: Session = Depends(get_db)):
 
 # 投稿編集
 @router.post("/edit_post/{post_id}", response_model = schemas.Post)
-def edit_post(request: schemas.Post, post_id: int,db: Session = Depends(get_db)):
+def edit_post(request: schemas.UpdatePost, post_id: int,db: Session = Depends(get_db)):
     return post.edit_post(request, post_id, db)
 
 # 投稿削除
