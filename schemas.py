@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from datetime import datetime
 
 class CreatePost(BaseModel):
+    # @todo imageの型をファイルに合った型に修正
     image: str
     caption: str
     location: str
