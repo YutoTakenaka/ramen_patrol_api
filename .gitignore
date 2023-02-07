@@ -1,2 +1,3 @@
 __pycache__/
 ramen_patrol_api.db
+.env

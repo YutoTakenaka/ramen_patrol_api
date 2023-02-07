@@ -1,6 +1,8 @@
 from typing import List
 from pydantic import BaseModel
 from datetime import datetime
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+
 
 class CreatePost(BaseModel):
     # @todo imageの型をファイルに合った型に修正
@@ -9,8 +11,10 @@ class CreatePost(BaseModel):
     location: str
     user_id: int
 
+
 class UpdatePost(CreatePost):
     post_id: int
+
 
 class Post(CreatePost):
     post_id: int
@@ -32,10 +36,15 @@ class Comment(BaseModel):
         orm_mode = True
 
 
+class CreateUser(BaseModel):
+    username: str
+    password: str
+
+
 class User(BaseModel):
     user_id: int
     username: str
-    mail: str
+    # mail: str
     created_at: datetime = None
     updated_at: datetime = None
     comments: List[Comment] = []
@@ -44,3 +53,17 @@ class User(BaseModel):
     class Config:
         orm_mode = True
 
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+    user_id: int
+    username: str
+
+
+class TokenData(BaseModel):
+    username: str
+
+
+class UserInDB(User):
+    hashed_password: str
