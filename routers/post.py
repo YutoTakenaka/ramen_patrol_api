@@ -19,10 +19,7 @@ def get_posts_all(db: Session = Depends(get_db)):
 def get_post(
     post_id: int,
     db: Session = Depends(get_db),
-    current_user: str = Depends(auth.get_current_user),
 ):
-    if not current_user:
-        raise HTTPException(status_code=403, detail="User does not have permission.")
     return post.get_post(post_id, db)
 
 
@@ -31,10 +28,7 @@ def get_post(
 def create_post(
     request: schemas.CreatePost,
     db: Session = Depends(get_db),
-    current_user: str = Depends(auth.get_current_user),
 ):
-    if not current_user:
-        raise HTTPException(status_code=403, detail="User does not have permission.")
     return post.create_post(request, db)
 
 
@@ -44,10 +38,7 @@ def edit_post(
     request: schemas.UpdatePost,
     post_id: int,
     db: Session = Depends(get_db),
-    current_user: str = Depends(auth.get_current_user),
 ):
-    if not current_user:
-        raise HTTPException(status_code=403, detail="User does not have permission.")
     return post.edit_post(request, post_id, db)
 
 
@@ -56,8 +47,5 @@ def edit_post(
 def delete_post(
     post_id,
     db: Session = Depends(get_db),
-    current_user: str = Depends(auth.get_current_user),
 ):
-    if not current_user:
-        raise HTTPException(status_code=403, detail="User does not have permission.")
     return post.delete_post(post_id, db)
