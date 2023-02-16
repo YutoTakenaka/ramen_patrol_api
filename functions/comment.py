@@ -17,3 +17,21 @@ def create_comment(request: schemas.CreateComment, db: Session):
     db.commit()
     db.refresh(comment)
     return comment
+
+
+# コメント削除
+def delete_comment(comment_id: int, db=Session):
+    comment = (
+        db.query(models.Comment)
+        .filter(models.Comment.comment_id == comment_id)
+        .one_or_none()
+    )
+    if not comment:
+        raise HTTPException(status_code=404, detail="comment not found.")
+
+    # @todo ログインユーザーのuser_idと投稿したユーザーのuser_idが一致しているかチェック
+    # if post.user_id != user_id:
+    #     raise HTTPException(status_code = 403, detail = "This user does not have permission.")
+    db.delete(comment)
+    db.commit()
+    return
