@@ -1,9 +1,9 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from typing import List
 import schemas
 from database import get_db
 from sqlalchemy.orm import Session
-from functions import post, auth
+from functions import post
 
 router = APIRouter(tags=["posts"])
 

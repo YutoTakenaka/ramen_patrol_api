@@ -25,11 +25,15 @@ class Post(CreatePost):
         orm_mode = True
 
 
-class Comment(BaseModel):
-    comment_id: int
+class CreateComment(BaseModel):
     comment: str
-    user_id: int
     post_id: int
+    user_id: int
+
+
+class Comment(CreateComment):
+    comment_id: int
+    created_at: datetime = None
     updated_at: datetime = None
 
     class Config:
@@ -44,7 +48,6 @@ class CreateUser(BaseModel):
 class User(BaseModel):
     user_id: int
     username: str
-    # mail: str
     created_at: datetime = None
     updated_at: datetime = None
     comments: List[Comment] = []

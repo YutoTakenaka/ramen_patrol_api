@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from routers import post, auth
+from routers import post, auth, comment
 import models
 from database import engine
 from fastapi.middleware.cors import CORSMiddleware
@@ -18,6 +18,7 @@ app.add_middleware(
 
 app.include_router(post.router)
 app.include_router(auth.router)
+app.include_router(comment.router)
 
 
 @app.get("/")

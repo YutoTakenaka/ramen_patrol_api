@@ -49,7 +49,7 @@ def edit_post(request: schemas.UpdatePost, post_id: int, db: Session):
 def delete_post(post_id: int, db=Session):
     post = db.query(models.Post).filter(models.Post.post_id == post_id).one_or_none()
     if not post:
-        raise HTTPException(status_code=404, detail="post_id not found.")
+        raise HTTPException(status_code=404, detail="post not found.")
     # @todo ログインユーザーのuser_idと投稿したユーザーのuser_idが一致しているかチェック
     # if post.user_id != user_id:
     #     raise HTTPException(status_code = 403, detail = "This user does not have permission.")
