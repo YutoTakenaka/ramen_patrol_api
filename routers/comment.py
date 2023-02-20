@@ -9,7 +9,7 @@ router = APIRouter(tags=["comments"])
 
 
 # コメント取得
-@router.get("/get_comment/{post_id}", response_model=List[schemas.Comment])
+@router.get("/get_comment/{post_id}", response_model=List[schemas.ResponseComment])
 def get_post(post_id, db: Session = Depends(get_db)):
     return comment.get_comment(post_id, db)
 

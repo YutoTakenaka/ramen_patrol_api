@@ -1,12 +1,22 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 import models, schemas
-from datetime import datetime
+from typing import List
 
 
 # コメント取得
 def get_comment(post_id: int, db: Session):
-    return db.query(models.Comment).filter(models.Comment.post_id == post_id).all()
+    query = (
+        db.query(models.Comment, models.User)
+        .join(models.User, models.Comment.user_id == models.User.user_id, isouter=True)
+        .filter(models.Comment.post_id == post_id)
+    )
+    results = db.execute(query).all()
+    if not results:
+        raise HTTPException(status_code=404, detail="comment not found.")
+    return [
+        schemas.ResponseComment(comment=result[0], user=result[1]) for result in results
+    ]
 
 
 # コメント作成
