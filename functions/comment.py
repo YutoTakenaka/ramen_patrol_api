@@ -12,8 +12,6 @@ def get_comment(post_id: int, db: Session):
         .filter(models.Comment.post_id == post_id)
     )
     results = db.execute(query).all()
-    if not results:
-        raise HTTPException(status_code=404, detail="comment not found.")
     return [
         schemas.ResponseComment(comment=result[0], user=result[1]) for result in results
     ]

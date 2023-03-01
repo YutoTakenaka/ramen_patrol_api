@@ -75,3 +75,8 @@ class UserInDB(User):
 class ResponseComment(BaseModel):
     comment: Comment
     user: User
+
+
+class ResponsePost(BaseModel):
+    post: Post
+    user: User

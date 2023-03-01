@@ -6,12 +6,27 @@ from datetime import datetime
 
 # 投稿一覧取得
 def get_posts_all(db: Session):
-    return db.query(models.Post).order_by(models.Post.created_at.desc()).all()
+    query = db.query(models.Post, models.User).join(
+        models.User, models.Post.user_id == models.User.user_id, isouter=True
+    )
+    results = db.execute(query).all()
+    if not results:
+        raise HTTPException(status_code=404, detail="post not found.")
+    return [schemas.ResponsePost(post=result[0], user=result[1]) for result in results]
 
 
 # 投稿取得
 def get_post(post_id: int, db: Session):
-    return db.query(models.Post).filter(models.Post.post_id == post_id).one_or_none()
+    query = (
+        db.query(models.Post, models.User)
+        .join(models.User, models.Post.user_id == models.User.user_id, isouter=True)
+        .filter(models.Post.post_id == post_id)
+    )
+
+    results = db.execute(query)
+    if not results:
+        raise HTTPException(status_code=404, detail="post not found.")
+    return [schemas.ResponsePost(post=result[0], user=result[1]) for result in results]
 
 
 # 新規投稿
