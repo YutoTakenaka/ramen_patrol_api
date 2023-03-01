@@ -9,13 +9,13 @@ router = APIRouter(tags=["posts"])
 
 
 # 投稿一覧取得
-@router.get("/get_posts_all", response_model=List[schemas.Post])
+@router.get("/get_posts_all", response_model=List[schemas.ResponsePost])
 def get_posts_all(db: Session = Depends(get_db)):
     return post.get_posts_all(db)
 
 
 # 投稿取得
-@router.get("/get_post/{post_id}", response_model=schemas.Post)
+@router.get("/get_post/{post_id}", response_model=schemas.ResponsePost)
 def get_post(
     post_id: int,
     db: Session = Depends(get_db),

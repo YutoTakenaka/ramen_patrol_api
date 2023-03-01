@@ -70,3 +70,13 @@ class TokenData(BaseModel):
 
 class UserInDB(User):
     hashed_password: str
+
+
+class ResponseComment(BaseModel):
+    comment: Comment
+    user: User
+
+
+class ResponsePost(BaseModel):
+    post: Post
+    user: User

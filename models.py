@@ -16,6 +16,9 @@ class User(Base):
     user_posts = relationship("Post", back_populates="post_user")
     user_comments = relationship("Comment", back_populates="comment_user")
 
+    def __init__(self, username):
+        self.username = username
+
 
 class Post(Base):
     __tablename__ = "posts"
