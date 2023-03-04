@@ -23,10 +23,11 @@ def get_post(post_id: int, db: Session):
         .filter(models.Post.post_id == post_id)
     )
 
-    results = db.execute(query)
+    results = db.execute(query).all()
+    print(results)
     if not results:
         raise HTTPException(status_code=404, detail="post not found.")
-    return [schemas.ResponsePost(post=result[0], user=result[1]) for result in results]
+    return schemas.ResponsePost(post=results[0][0], user=results[0][1])
 
 
 # 新規投稿

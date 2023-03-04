@@ -25,6 +25,7 @@ class Post(Base):
     post_id = Column(Integer, primary_key=True, index=True)
     # @todo imageの型をファイル型に修正
     image = Column(String, index=True)
+    # image = Column(UploadFile, index=True)
     caption = Column(String, index=True)
     location = Column(String, index=True)
     created_at = Column(DateTime, default=datetime.now(JST), nullable=True)

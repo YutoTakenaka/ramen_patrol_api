@@ -1,7 +1,6 @@
 from typing import List
 from pydantic import BaseModel
 from datetime import datetime
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
 
 class CreatePost(BaseModel):
